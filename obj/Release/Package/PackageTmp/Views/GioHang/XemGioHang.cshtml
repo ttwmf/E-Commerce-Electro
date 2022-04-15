@@ -1,0 +1,154 @@
+﻿@using Electro.Models
+@model List<TakeEverything>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutKhachHang.cshtml";
+}
+
+
+@*    <script>
+
+        function capNhatTienTang(DonGia, id) {
+            var kk = "haha_" + id;
+            var SoLuong = parseInt(document.getElementById(id).value);
+            SoLuong++;
+            let x = DonGia * SoLuong;
+            x = x.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            document.getElementById(kk).innerHTML = x;
+            TongTien(DonGia);
+
+        }
+        function capNhatTienGiam(DonGia, id) {
+            var kk = "haha_" + id;
+            var SoLuong = parseInt(document.getElementById(id).value);
+            if (SoLuong == 1)
+                return;
+            SoLuong--;
+            let x = DonGia * SoLuong;
+            x = x.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            document.getElementById(kk).innerHTML = x;
+            TongTien(-DonGia);
+
+        }
+        function TongTien(DonGia) {
+            var wtf = document.getElementById("TongTien").innerHTML;
+            var tongtien = parseInt(wtf);
+            var tmp = Math.round(DonGia);
+            tongtien += tmp;
+            document.getElementById("TongTien").innerHTML = tongtien;
+        }
+    </script>
+    <h2 style="text-align:center;">THÔNG TIN GIỎ HÀNG</h2>
+
+    Làm sao để không load lại trang ??? vẫn cập nhật db
+    <table border="1" id="talbe">
+        <tr style="background-color: #9ca1a4; font-size: 15px; font-weight:bold; text-align:center;">
+            <td style="width: 5%">Mã SP</td>
+            <td style="width: 25%">Tên sản phẩm</td>
+            <td style="width: 25%">Cấu hình</td>
+            <td style="width: 5%;">Số Lượng</td>
+            <td style="width: 15%">Đơn Giá</td>
+            <td style="width: 15%">Thành Tiền</td>
+            <td style="width: 5%"></td>
+            <td style="width: 5%"></td>
+        </tr>
+        @{ double TongTien = ViewBag.TongTien;}
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td style="width:5%; text-align:center;">@item.MaSP</td>
+                <td>@item.TenSP</td>
+                <td>@item.CauHinh</td>
+                <td style="text-align: center; width: 15px">
+                    <div class="input-number">
+                        <input type="number" value="@item.SoLuongTrongGioHang" id="@item.MaSP" />
+                        <span class="qty-up" onclick="capNhatTienTang(@item.DonGia, @item.MaSP.ToString())">+</span>
+                        <span class="qty-down" onclick="capNhatTienGiam(@item.DonGia, @item.MaSP.ToString())">-</span>
+                    </div>
+
+                </td>
+                <td id="DonGia" align="center">@string.Format("{0:#,##0,0}", @item.DonGia)</td>
+
+                <td align="center" class="SoLuong" id="haha_@item.MaSP">@string.Format("{0:#,##0,0}", @item.DonGia * item.SoLuongTrongGioHang)</td>
+
+                <td>@Html.ActionLink("Xóa", "XoaGioHang", new { MaSP = item.MaSP })</td>
+                <td><a href="@Url.Action("ChiTietSanPham", "Home", new { MaSP = item.MaSP })">Chi tiết</a></td>
+            </tr>
+
+        }
+        <tr>
+            <td colspan="3" style="text-align:right; color:red; font-weight:bold; padding-right:5px;">
+                Tổng tiền: <span id="TongTien">@TongTien</span>
+            </td>
+        </tr>
+        <tr style="font-weight:bold; color: blue; text-align: center;">
+            <td colspan="9">
+                @Html.ActionLink("Đặt hàng", "DatHang", "GioHang")
+
+            </td>
+        </tr>
+    </table>
+*@
+
+<div class="container">
+    <br />
+    <h2 style="text-align:center">THÔNG TIN GIỎ HÀNG</h2>
+    <br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 5%">Mã</th>
+                <th style="width: 30%">Tên sản phẩm</th>
+                <th style="width: 25%">Cấu hình</th>
+                <th style="width: 10%;">Số Lượng</th>
+                <th style="width: 10%">Đơn Giá</th>
+                <th style="width: 15%">Thành Tiền</th>
+                <th style="width: 5%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ double TongTien = ViewBag.TongTien;}
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td style="text-align:center;">@item.MaSP</td>
+                    <td><a href="@Url.Action("ChiTietSanPham", "Home", new { MaSP = item.MaSP, GiaSale = item.DonGia })">@item.TenSP</a></td>
+                    <td>@item.CauHinh</td>
+                    @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { MaSP = item.MaSP, SoLuongTon = item.SoLuongTon }))
+                    {
+                        <td style="text-align: center; width: 10%">
+                            <div class="input-number">
+                                <input type="number" min="1" value="@Math.Min(item.SoLuongTrongGioHang, item.SoLuongTon)" id="@item.MaSP" name="SoLuong" />
+                                <button class="qty-up" type="submit">+</button>
+                                <button class="qty-down" type="submit">-</button>
+                            </div>
+                        </td>
+
+                    }
+
+                    <td align="center">@string.Format("{0:#,##0,0}", @item.DonGia)</td>
+
+                    <td align="center">@string.Format("{0:#,##0,0}", @item.DonGia * item.SoLuongTrongGioHang)</td>
+
+                    <td><button class="btn btn-default" onclick="location.href = '@Url.Action("XoaGioHang", "GioHang", new {MaSP = item.MaSP})'">x</button></td>
+                </tr>
+
+            }
+            <tr>
+                <td colspan="8" style="text-align:right; color:red; font-weight:bold; padding-right:5px;">
+                    Tổng tiền: @string.Format("{0:#,##0,0}", ViewBag.TongTien)
+                </td>
+            </tr>
+            <tr style="font-weight:bold; color: blue; text-align: center;">
+                <td colspan="8">
+                    @Html.ActionLink("Đặt hàng", "DatHang", "GioHang")
+                </td>
+            </tr>
+
+
+
+        </tbody>
+    </table>
+</div>

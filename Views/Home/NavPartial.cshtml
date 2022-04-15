@@ -1,0 +1,28 @@
+﻿<nav id="navigation">
+    <div class="container">
+        <div id="responsive-nav">
+            <ul class="main-nav nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Laptops
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 7})">Apple</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 3})">Dell</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 1})">Asus</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 2})">Toshiba</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 4})">Acer</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 5})">HP</a></li>
+                        <li><a href="@Url.Action("LocSanPhamTheoNSX", "NhaSanXuat", new { MaNSX = 6})">LG</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="@Url.Action("SanPhamKhuyenMai", "Home")">Khuyến mãi</a></li>
+                <li><a href="@Url.Action("Index","CauHoiThuongGap")">Hỏi đáp</a></li>
+                <li><a href="@Url.Action("LienHeCH", "LienHe")">Liên hệ</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

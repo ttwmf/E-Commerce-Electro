@@ -1,0 +1,10 @@
+﻿
+@if (ViewBag.xxx > 0)
+{
+    <li><a id="GioHang" class="dropdown-toggle" href="@Url.Action("XemGioHang", "GioHang")"><i class="fa fa-shopping-cart"></i><span>Giỏ hàng(@ViewBag.xxx)</span></a></li>
+}
+else
+{
+    <li><a id="GioHang" class="dropdown-toggle" href="@Url.Action("XemGioHang", "GioHang")"><i class="fa fa-shopping-cart"></i><span>Giỏ hàng</span></a></li>
+}
+

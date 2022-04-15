@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<br />
+<h2>Thêm Nhà Cung Cấp</h2>
+<br />
+
+@if (ViewBag.NumberOfError > 0)
+{
+    <div class="alert alert-danger">
+        <p>The are @ViewBag.NumberOfError error(s) :</p>
+        <ol>
+            @foreach (var error in ViewBag.ListError)
+            {
+                <li>@error</li>
+
+            }
+        </ol>
+    </div>
+}
+
+    @using (Html.BeginForm("Them", "NhaCungCap", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <lable class="control-label col-md-2">Tên Nhà Cung Cấp(*)</lable>
+                <div class="col-md-10">
+                    <input type="text" size="70" name="TenNCC" placeholder="Tên Nhà Cung Cấp" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <lable class="control-label col-md-2">Địa Chỉ:(*)</lable>
+                <div class="col-md-10">
+                    <input type="text" size="70" name="DiaChi" placeholder="Địa Chỉ" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <lable class="control-label col-md-2">Email:(*)</lable>
+                <div class="col-md-10">
+                    <input type="text" size="70" name="Email" placeholder="Email" />
+                </div>
+            </div>
+
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <lable class="control-label col-md-2">Điện Thoại(*)</lable>
+                    <div class="col-md-10">
+                        <input type="text" size="20" name="DienThoai" placeholder="Điện Thoại" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Lưu thông tin" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <p>
+        <a href="@ViewBag.Url" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+    </p>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Electro.Models.TakeEverything>
+@using Electro.Models;
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="section-title">
+                <h3 class="title">SẢN PHẨM KHUYẾN MÃI</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <div class="products-slick" data-nav="#slick-nav-1">
+                            @foreach (TakeEverything sp in Model)
+                            {
+                                <!-- product -->
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="~/img/@sp.HinhAnh" alt="">
+                                        @if (sp.SoLuongTon > 0)
+                                        {
+                                            <div class="product-label">
+                                                <span class="sale" style="font-weight:bold">-@sp.GiamGia %</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-label">
+                                                <span class="sale" style="font-weight:bold">Hết hàng</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="product-body">
+                                        @{ double @GiaSale = (double)@sp.DonGia * (1 - 1.0 * sp.GiamGia / 100);}
+                                        <h3 class="product-name"><a href="#">@sp.TenSP</a></h3>
+                                        <h4 class="product-price">@Html.FormatValue(@GiaSale, "{0:#,###}") VNĐ </h4>
+                                        <del class="product-old-price">@Html.FormatValue(sp.DonGia, "{0:#,###}") VNĐ</del>
+                                        <div>
+                                            @{ int star = 0;}
+                                            @for (; star < @Math.Floor((double)@sp.TrungBinhDanhGia); star++)
+                                            {
+                                                <span class="fa fa-star"></span>
+
+                                            }
+                                            @if (star < @Math.Ceiling((double)@sp.TrungBinhDanhGia))
+                                            {
+                                                <i class="fa fa-star-half-full" style="color:orange"></i>
+                                                star++;
+                                            }
+                                            @for (; star < 5; star++)
+                                            {
+                                                <span class="fa fa-star-o"></span>
+                                            }
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">So sánh</span></button>
+
+                                            <button class="quick-view" onclick="location.href = '@Url.Action("ChiTietSanPham", "Home", new { MaSP = sp.ID, GiaSale = GiaSale})'">
+                                                <i class="fa fa-eye"></i><span class="tooltipp">
+                                                    Chi tiết
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @if (sp.SoLuongTon > 0)
+                                    {
+                                        <div class="add-to-cart">
+                                            <button class="add-to-cart-btn" onclick="location.href = '@Url.Action("ThemGioHang", "GioHang", new { MaSP = sp.ID, url = Request.Url.ToString()})'"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                                        </div>
+
+                                    }
+                                </div>
+                                <!-- product -->
+
+                            }
+                        </div>
+                        <div id="slick-nav-1" class="products-slick-nav"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

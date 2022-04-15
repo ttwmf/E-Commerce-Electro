@@ -1,0 +1,111 @@
+﻿@using Electro.Models
+@model IEnumerable<Electro.Models.DonDatHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div>
+    @if (string.IsNullOrEmpty(ViewBag.KiemTraNgayKetThuc) || string.IsNullOrEmpty(ViewBag.KiemTraNgayNgayBatDau))
+    {
+        <p id="NgayKetThuc" style="color:red; text-align:center">@ViewBag.KiemTraNgayKetThuc</p>
+        <p id="NgayBatDau" style="color:red; text-align:center">@ViewBag.KiemTraNgayNgayBatDau</p>
+    }
+
+    @using (Html.BeginForm("Index", "DoanhThu", FormMethod.Post))
+    {
+        <div class="form-group" style="text-align:center">
+            <div class="col-md-10">
+                <lable>Từ:</lable>
+                <input type="date" name="TuNgay" value="@Html.FormatValue(ViewBag.TuNgay , "{0:yyyy-MM-dd}")"
+                       required />
+                <lable>Đến:</lable>
+                <input type="date" name="DenNgay"
+                       value="@Html.FormatValue(ViewBag.DenNgay, "{0:yyyy-MM-dd}")" />
+                <button id="btnLocDoanhThu" type="submit">Lọc</button>
+            </div>
+        </div>
+
+    }
+</div>
+    <br />
+    <br />
+
+    <div class="container-fluid">
+        <table class="table-hover">
+            <tr style="background-color:darkgray">
+                <th style="text-align:center; width:10%">
+                    Ngày lập đơn
+                </th>
+                <th style="text-align:center; width:4%">
+                    Mã ĐH
+                </th>
+                <th style="text-align:center; width:10%">
+                    Tên khách hàng
+                </th>
+
+                <th style="text-align:center; width:9%">
+                    Điện thoại
+                </th>
+                <th style="text-align:center; width:15%">
+                    Địa chỉ giao hàng
+                </th>
+                <th style="text-align:center; width:12%">
+                    Email
+                </th>
+
+                <th style="text-align:center; width:15%">
+                    Phương thức thanh toán
+                </th>
+                <th style="text-align:center; width:10%">
+                    Số tiền
+                </th>
+                <th style="text-align:center"></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td style="text-align:center">
+                        @Html.FormatValue(item.NgayLap, "{0:dd/MM/yyyy}")
+                    </td>
+                    <td style="text-align:center;">
+                        @item.MaDDH
+                    </td>
+                    <td style="text-align:center">
+                        @item.Hoten
+                    </td>
+                    <td style="text-align:center">
+                        @item.DienThoai
+                    </td>
+                    <td style="text-align:center">
+                        @item.DiaChiGiaoHang
+                    </td>
+                    <td style="text-align:center">
+                        @item.Email
+                    </td>
+                    <td style="text-align:center">
+                        @item.PhuongThucThanhToan
+                    </td>
+                    <td style="text-align:center">
+                        @string.Format("{0:#,##0,0}", item.TongTien)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Sua", new { MaDDH = item.MaDDH , url = Request.Url.ToString()})" class="btn btn-warning" role="button">Sửa</a>
+                        <a href="@Url.Action("ChiTietDonHang", "DonHang", new { MaDDH = item.MaDDH , url = Request.Url.ToString()})" class="btn btn-primary" role="button">Chi tiết</a>
+                        <a href="@Url.Action("Xoa", new { MaDDH = item.MaDDH })" class="btn btn-danger" role="button">Xóa</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="7" style="text-align:right; color:red; font-weight:bold; font-size:18px">
+                    Tổng tiền:
+                </tdcolspan="8">
+                <td  style=" text-align: center; color: red; font-weight: bold; font-size: 18px">
+                    @string.Format("{0:#,##0,0}", ViewBag.TongTien)
+                </td>
+            </tr>
+        </table>
+    </div>
+

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Electro.Models.ChiTietDonDatHang>
+@{
+    ViewBag.Title = "ChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 style="text-align:center">Chi tiết đơn hàng</h2>
+<div class="container">
+
+
+    <table class="table-hover">
+        <tr style="background-color:darkgray">
+            <th style="text-align:center; width:10%">
+                Mã SP
+            </th>
+            <th style="text-align:center; width:30%">
+                Tên SP
+            </th>
+
+            <th style="text-align:center; width:10%">
+                Số lượng
+            </th>
+            <th style="text-align:center; width:15%">
+                Đơn giá
+            </th>
+            <th style="text-align:center; width:15%">
+                Thành tiền
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center; font-weight:bold">
+                    @item.MaSP
+                </td>
+                <td style="text-align:center">
+                    @item.TenSP
+                </td>
+                <td style="text-align:center">
+                    @item.SoLuong
+                </td>
+                <td style="text-align:center">
+                    @string.Format("{0:#,##0,0}", item.DonGiaBan)
+                </td>
+                <td style="text-align:center">
+                    @string.Format("{0:#,##0,0}", item.SoLuong * item.DonGiaBan)
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div style="margin-bottom:0px">
+        <a href="@ViewBag.Url" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+    </div>
+</div>
+
+
+

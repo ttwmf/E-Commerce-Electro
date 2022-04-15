@@ -1,0 +1,261 @@
+﻿@using Electro.Models
+@model List<TakeEverything>
+
+@{
+    ViewBag.Title = "ThanhToan";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+@{
+    string hoTen = ViewBag.HoTen;
+    string diaChi = ViewBag.KiemTraDiaChi;
+    string dienThoai = ViewBag.KiemTraSDT;
+    string email = ViewBag.KiemTraEmail;
+
+}
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        @using (Html.BeginForm("DatHang", "GioHang", new { TongSoTien = ViewBag.TongTien }))
+        {
+            <!-- row -->
+            <div class="row">
+                @if (Session["TaiKhoan"] != null)
+                {
+                    KhachHang kh = Session["TaiKhoan"] as KhachHang;
+                    <div class="col-md-7">
+                        <!-- Billing Details -->
+                        <div class="billing-details">
+                            <div class="section-title">
+                                <h3 class="title">Thông tin nhận hàng</h3>
+                            </div>
+                            <div class="form-group">
+                                <input class="input"
+                                       type="text"
+                                       name="HoTen"
+                                       value="@kh.HoTen"
+                                       placeholder="Họ tên" />
+                            </div>
+                            <div class="form-group">
+                                <input class="input"
+                                       type="tel"
+                                       name="DienThoai"
+                                       value="@kh.DienThoai"
+                                       placeholder="Điện thoại" />
+                            </div>
+                            <div class="form-group">
+                                <input class="input"
+                                       type="text"
+                                       name="DiaChi"
+                                       value="@kh.DiaChi"
+                                       placeholder="Địa chỉ nhận hàng" />
+                            </div>
+                            <div class="form-group">
+                                <input class="input"
+                                       type="email"
+                                       name="Email"
+                                       value="@kh.Email"
+                                       placeholder="Email" 
+                                       required/>
+                            </div>
+                        </div>
+                        <!-- /Billing Details -->
+                        <!-- Shiping Details -->
+                        <div class="shiping-details">
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="shiping-address" />
+                                <label for="shiping-address">
+                                    <span></span>
+                                    Gửi đến địa chỉ khác
+                                </label>
+                                <div class="caption">
+                                    <div class="form-group">
+                                        <input class="input"
+                                               type="text"
+                                               value=""
+                                               name="DiaChiNhanHang"
+                                               placeholder="Địa chỉ nhận hàng" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Shiping Details -->
+                        <!-- Order notes -->
+                        <div class="order-notes">
+                            <textarea class="input" placeholder="Ghi chú"></textarea>
+                        </div>
+                        <h4>(*)Đơn hàng được giao từ 3-5 ngày sau khi đặt hàng thành công</h4>
+                        <!-- /Order notes -->
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-7">
+                        <!-- Billing Details -->
+                        <div class="billing-details">
+                            <div class="section-title">
+                                <h3 class="title">Thông tin nhận hàng</h3>
+                            </div>
+                            <div class="form-group">
+                                @if (!string.IsNullOrEmpty(hoTen))
+                                {
+                                    <p id="DatHangHoTen" style="color: red">@hoTen</p>
+                                }
+
+                                <input class="input"
+                                       type="text"
+                                       name="HoTen"
+                                       placeholder="Họ tên"/>
+                            </div>
+                            <div class="form-group">
+                                @if (!string.IsNullOrEmpty(hoTen))
+                                {
+                                    <p id="DatHangDienThoai" style="color: red">@dienThoai</p>
+                                }
+                                <input class="input"
+                                       type="tel"
+                                       name="DienThoai"
+                                       placeholder="Điện thoại" />
+                            </div>
+                            <div class="form-group">
+                                @if (!string.IsNullOrEmpty(hoTen))
+                                {
+                                    <p id="DatHangDiaChi" style="color: red">@diaChi</p>
+                                }
+                                <input class="input"
+                                       type="text"
+                                       name="DiaChi"
+                                       placeholder="Địa chỉ nhận hàng" />
+                            </div>
+                            <div class="form-group">
+                                @if (!string.IsNullOrEmpty(hoTen))
+                                {
+                                    <p id="DatHangEmail" style="color: red">@email</p>
+                                }
+                                <input class="input"
+                                       type="text"
+                                       name="Email"
+                                       placeholder="Email" />
+                            </div>
+                        </div>
+                        <!-- /Billing Details -->
+                        <!-- Order notes -->
+                        <div class="order-notes">
+                            <textarea class="input" placeholder="Ghi chú"></textarea>
+                        </div>
+                        <h4>(*)Đơn hàng được giao từ 3-5 ngày sau khi đặt hàng thành công</h4>
+                        <!-- /Order notes -->
+                    </div>
+                }
+
+
+
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">Thông tin đơn hàng</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div>
+                                <strong>Số lượng</strong>
+                            </div>
+                            <div><strong>Sản phẩm</strong></div>
+                            <div><strong>Thành tiền</strong></div>
+                        </div>
+                        <div class="order-products">
+                            @foreach (var item in Model)
+                            {
+                                <div class="order-col">
+                                    <div>@item.SoLuongTrongGioHang x @item.TenSP</div>
+                                    <div>@string.Format("{0:#,##0,0}", item.DonGia * item.SoLuongTrongGioHang)</div>
+                                </div>
+
+                            }
+                        </div>
+                        <div class="order-col">
+                            <div>Phí shíp</div>
+                            <div><strong>FREE</strong></div>
+                        </div>
+                        <div class="order-col">
+                            <div><strong>Tổng tiền:</strong></div>
+                            <div><strong class="order-total">@string.Format("{0:#,##0,0}", ViewBag.TongTien)</strong></div>
+                        </div>
+                    </div>
+                    <div class="payment-method">
+                        <div class="input-radio">
+                            <input checked type="radio" name="PhuongThucThanhToan" id="payment-1" value="1" />
+                            <label for="payment-1">
+                                <span></span>
+                                Thanh toán khi nhận hàng
+                            </label>
+                        </div>
+                        <div class="input-radio">
+                            <input type="radio" name="PhuongThucThanhToan" id="payment-2" value="2" />
+                            <label for="payment-2">
+                                <span></span>
+                                Chuyển khoản @ViewBag.PhuongThucThanhToan
+                            </label>
+                            <div class="caption">
+                                <p>
+                                    Vui lòng chuyển khoản vào TK: 054545145454 <br />
+                                    Nội dung: HoTen_SĐT_ThanhToanDonHang
+                                </p>
+                            </div>
+                        </div>
+                        @if (@ViewBag.PhuongThucThanhToan == 3)
+                        {
+                            <div class="input-radio">
+                                <input type="radio" name="PhuongThucThanhToan" id="payment-3" value="3" checked />
+                                <label for="payment-3">
+                                    <span></span>
+                                    Thanh toán online
+                                </label>
+                                <div class="caption">
+                                    <p>
+                                        <a href="@Url.Action("PaymentWithPaypal", "PayPal")"><img src="~/img/paypal.png" style="height:40px;" /></a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="input-radio">
+                                <input type="radio" name="PhuongThucThanhToan" id="payment-3" value="3" />
+                                <label for="payment-3">
+                                    <span></span>
+                                    Thanh toán online
+                                </label>
+                                <div class="caption">
+                                    <p>
+                                        <a href="@Url.Action("PaymentWithPaypal", "PayPal")"><img src="~/img/paypal.png" style="height:40px;" /></a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+                    <div style="padding-left:100px">
+                        <button type="submit"  class="primary-btn order-submit">Xác nhận đặt hàng</button>
+                    </div>
+                    
+                </div>
+                <!-- /Order Details -->
+                <script>
+                    function ThongBao() {
+                        alert("Đặt hàng thành công");
+                    }
+                </script>
+
+            </div>
+            <!-- /row -->
+
+        }
+
+    </div>
+    <!-- /container -->
+</div>
+

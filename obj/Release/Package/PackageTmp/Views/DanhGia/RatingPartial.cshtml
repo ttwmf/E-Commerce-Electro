@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Electro.Models.TakeEverything>
+
+@{ 
+    double TrungBinhDanhGia = 0;
+    if (ViewBag.SoLuongDanhGia != 0)
+    {
+        TrungBinhDanhGia = Math.Round((double)(1.0 * ViewBag.TongDanhGia * 10 / ViewBag.SoLuongDanhGia));
+    }
+
+    TrungBinhDanhGia /= 10;
+}
+<div class="col-md-3">
+    <div id="rating">
+        <div class="rating-avg">
+            
+            <div class="rating-stars">
+                @{ int star = 0;}
+                @for (; star < @Math.Floor((double)TrungBinhDanhGia); star++)
+                {
+                    <i class="fa fa-star" style="color:orange"></i>
+
+                }
+                @if (star < @Math.Ceiling((double)TrungBinhDanhGia))
+                {
+                    <i class="fa fa-star-half-full" style="color:orange"></i>
+                    star++;
+                }
+                @for (; star < 5; star++)
+                {
+                    <span class="fa fa-star-o"></span>
+                }
+            </div>
+            <span style="color: orange; font-weight: bold; font-size:18px">@TrungBinhDanhGia</span>
+        </div>
+        <ul class="rating">
+            @for (int i = 0; i < 5; i++)
+            {
+                
+                int DanhGia = 0;
+                foreach(var dg in Model)
+                {
+                    if(5 - i == dg.SoSao)
+                    {
+                        DanhGia = dg.SoLuongDanhGia;
+                        break;
+                    }
+                }
+                int TiLe = (int)Math.Round(1.0 * DanhGia*100 / ViewBag.SoLuongDanhGia);
+                <li>
+                    <div class="rating-stars">
+                        @{int j = 0;}
+                        @for (; j < 5 - i; j++)
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+                        @for(int k = 0; k < 5-j; k++)
+                        {
+                            <i class="fa fa-star-o"></i>
+                        }
+                    </div>
+                    <div class="rating-progress">
+                        <div style="width: @TiLe%"></div>
+                    </div>
+                    <span class="sum">@DanhGia</span>
+
+                 </li>
+            }
+        </ul>
+    </div>
+</div>

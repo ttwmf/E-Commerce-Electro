@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Electro.Models.TakeEverything>
+
+@{
+    ViewBag.Title = "SanPhamBanChay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sản phẩm bán chạy</h2>
+@ViewBag.TuNgay
+<div class="container">
+
+    @using (Html.BeginForm("SanPhamBanChay", "ThongKe", FormMethod.Post))
+    {
+        <div class="form-group" style="text-align:center">
+            <div class="col-md-10">
+                <lable>Từ:</lable>
+                <input type="date" name="TuNgay" value="@Html.FormatValue(ViewBag.TuNgay , "{0:yyyy-MM-dd}")" />
+                <lable>Đến:</lable>
+                <input type="date" name="DenNgay"
+                       value="@Html.FormatValue(ViewBag.DenNgay , "{0:yyyy-MM-dd}")" />
+                <button id="btnLocBanChay" type="submit">Lọc</button>
+            </div>
+
+            @if (string.IsNullOrEmpty(ViewBag.KiemTraNgayKetThuc) || string.IsNullOrEmpty(ViewBag.KiemTraNgayBatDau))
+            {<div class="col-md-10">
+                    <p id="NgayBatDau" style="color:red; text-align:center">@ViewBag.KiemTraNgayBatDau</p>
+                    <p id="NgayKetThuc" style="color:red; text-align:center">@ViewBag.KiemTraNgayKetThuc</p>
+                </div>
+            }
+        </div>
+
+    }
+
+    <div class="col-md-12">
+        <table class="table-hover">
+
+            <tr style="background-color:darkgray">
+                <th style="text-align:center; width:30%">
+                    Mã sản phẩm
+                </th>
+                <th style="text-align:center; width:60%">
+                    Tên sản phẩm
+                </th>
+                <th style="text-align:center; width:10%">
+                    Số lượng bán
+                </th>
+                <th style="text-align:center"></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center;">
+                        @item.MaSP
+                    </td>
+                    <td style="text-align:center">
+                        @item.TenSP
+                    </td>
+                    <td style="text-align:center">
+                        @item.SoLuongBan
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>
+<br />

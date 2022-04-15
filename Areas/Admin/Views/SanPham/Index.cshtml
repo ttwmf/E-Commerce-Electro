@@ -1,0 +1,145 @@
+﻿@model PagedList.PagedList<Electro.Models.SanPham>
+@using PagedList.Mvc
+@using Electro.Models
+
+
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@*Tao helper rieng*@
+@helper TrunCate(string s, int length)
+{
+
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>....</text>
+    }
+ 
+
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 style="text-align:center">Danh sách sản phẩm</h2>
+
+    <table class="table-hover">
+        <tr style="background-color:darkgray">
+            <th style="text-align:center; width:2%">
+                Mã
+            </th>
+            <th style="text-align:center; width:10%">
+                Tên SP
+            </th>
+            <th style="text-align:center; width:15%">
+                Cấu hình
+            </th>
+            <th style="text-align:center; width:10%">
+                Ảnh
+            </th>
+            <th style="text-align:center; width:15%">
+                Mô tả
+            </th>
+
+            <th style="text-align:center; width:6%">
+                Ngày cập nhật
+            </th>
+            <th style="text-align:center; width:5%">
+                Số lượng
+            </th>
+            <th style="text-align:center; width:5%">
+                Giá bán
+            </th>
+            <th style="text-align:center; width:4%">
+                Lượt xem
+            </th>
+            <th style="text-align:center; width:4%">
+                Đánh giá
+            </th>
+            <th style="text-align:center; width:5%">
+                Nhà cung cấp
+            </th>
+            <th style="text-align:center; width:5%">
+                Thương hiệu
+            </th>
+            <th style="text-align:center"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center; font-weight:bold">
+                    @item.MaSP
+                </td>
+                <td style="text-align:center">
+                    <a href="@Url.Action("ChiTiet", new { MaSP = item.MaSP , url = Request.Url.ToString()})" style="color:black">
+                        @TrunCate(item.TenSP, 20)
+                    </a>
+                </td>
+                <td style="text-align:left">
+                    @Html.Raw(TrunCate(item.CauHinh, 50).ToString())
+                </td>
+                <td style="text-align:center">
+                    <img src="~/img/@item.HinhAnh" style="width:70px" />
+                </td>
+                <td style="text-align:left">
+                    @Html.Raw(TrunCate(item.MoTa, 30).ToString())
+                </td>
+
+                <td style="text-align:center">
+                    @Html.FormatValue(item.NgayCapNhat, "{0:dd/MM/yyyy}")
+                </td>
+                <td style="text-align:center">
+                    @item.SoLuongTon
+                </td>
+                <td style="text-align:center">
+                    @Html.FormatValue(item.DonGia, "{0:#,##0}")
+                </td>
+                <td style="text-align:center">
+                    @item.LuotXem
+                </td>
+                <td style="text-align:center">
+                    @item.TrungBinhDanhGia
+                </td>
+
+                <td style="text-align:center">
+                    @item.NhaCungCap.TenNCC
+                </td>
+                <td style="text-align:center">
+                    @item.NhaSanXuat.TenNSX
+                </td>
+                <td>
+                    <a href="@Url.Action("Sua", new { MaSP = item.MaSP , url = Request.Url.ToString()})" class="btn btn-warning" role="button">Sửa</a>
+                    <a href="@Url.Action("ChiTiet", new { MaSP = item.MaSP , url = Request.Url.ToString()})" class="btn btn-primary" role="button">Chi tiết</a>
+                    <a href="@Url.Action("Xoa", new { MaSP = item.MaSP })" class="btn btn-danger" role="button">Xóa</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+    </div>
+    <div style="margin-left:90%">
+        <a id="Them" href="@Url.Action("Them")" class="btn btn-info" role="button" style="font-weight:bold; color:red;">Thêm mới</a>
+    </div>
+</div>
+<style>
+    .MenuTrang {
+        display: inline;
+        display: inline;
+        text-align: center;
+    }
+</style>
+
+

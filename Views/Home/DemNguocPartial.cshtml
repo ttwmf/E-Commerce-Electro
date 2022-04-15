@@ -1,0 +1,82 @@
+﻿
+<div id="hot-deal" class="section" style="margin-top:0px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hot-deal">
+                    <ul class="hot-deal-countdown">
+                        <li>
+                            <div>
+                                <h3 id="ngay">02</h3>
+                                <span>Days</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="gio">10</h3>
+                                <span>Hours</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="phut">34</h3>
+                                <span>Mins</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3 id="giay">60</h3>
+                                <span>Secs</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <h2 class="text-uppercase">@Model.TenChuongTrinh</h2>
+                    <p>Sale Up to 50% tất cả sản phẩm</p>
+                    <a class="primary-btn cta-btn" href="@Url.Action("SanPhamKhuyenMai", "Home")">Shop now</a>
+                    <p style="font-size: 12px; margin-top: 10px; font-weight:bold">
+                        @Html.FormatValue(Model.NgayBatDau, "{0:dd/MM/yyyy}") - <span id="NgayKetThuc">@Html.FormatValue(Model.NgayKetThuc, "{0:dd/MM/yyyy}")</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dateString = document.getElementById("NgayKetThuc").innerHTML;
+    var dateString2 = dateString.split('/');
+    var newDate = dateString2[1] + '/' + dateString2[0] + '/' + dateString2[2];
+    console.log(newDate);
+
+    var countDownDate = new Date(newDate);
+    console.log(countDownDate);
+    var x = setInterval(function () {
+
+        var now = new Date().getTime();
+
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        if (days < 10) {
+            days = "0" + days;
+        }
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        document.getElementById("ngay").innerHTML = days;
+        document.getElementById("gio").innerHTML = hours;
+        document.getElementById("phut").innerHTML = minutes;
+        document.getElementById("giay").innerHTML = seconds;
+
+    }, 1000);
+
+</script>

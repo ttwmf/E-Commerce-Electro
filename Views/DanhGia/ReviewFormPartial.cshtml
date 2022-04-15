@@ -1,0 +1,74 @@
+﻿
+@{
+    double GiaSale = 0;
+    if (ViewBag.GiaSale != null)
+    {
+        GiaSale = @ViewBag.GiaSale;
+    }
+
+}
+
+<div class="col-md-3">
+    <div id="review-form">
+        @using (Html.BeginForm("ReviewFormPartial", "DanhGia", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "review-form" }))
+        {
+            if (!string.IsNullOrEmpty(ViewBag.KiemTraHoTen))
+            {
+                <p id="KTHoTen" style="color:red">@ViewBag.KiemTraHoTen </p>
+            }
+            <input class="input"
+                   type="text"
+                   placeholder="Your Name" name="HoTen" />
+
+
+            if (!string.IsNullOrEmpty(ViewBag.KiemTraEmail))
+            {
+                <p id="KTEmail" style="color:red">@ViewBag.KiemTraEmail </p>
+            }
+            <input class="input"
+                   type="text"
+                   placeholder="Your Email" name="Email" />
+
+            if (!string.IsNullOrEmpty(ViewBag.KiemTraBinhLuan))
+            {
+                <p id="KTNoiDung" style="color:red">@ViewBag.KiemTraBinhLuan </p>
+            }
+            <textarea class="input"
+                      placeholder="Your Review" name="NoiDung"></textarea>
+
+            if (!string.IsNullOrEmpty(ViewBag.KiemTraRating))
+            {
+                <p id="KTRating" style="color:red">@ViewBag.KiemTraRating </p>
+            }
+            <div class="input-rating" id="emdepqua">
+                <span>Your Rating: </span>
+                <div class="stars" id="emkhungqua">
+                    <input id="star5"
+                           name="Rating"
+                           value="5"
+                           type="radio" /><label for="star5"></label>
+                    <input id="star4"
+                           name="Rating"
+                           value="4"
+                           type="radio" /><label for="star4"></label>
+                    <input id="star3"
+                           name="Rating"
+                           value="3"
+                           type="radio" /><label for="star3"></label>
+                    <input id="star2"
+                           name="Rating"
+                           value="2"
+                           type="radio" /><label for="star2"></label>
+                    <input id="star1"
+                           name="Rating"
+                           value="1"
+                           type="radio" /><label for="star1"></label>
+                    <input type="hidden" name="MaSP" value="@ViewBag.MaSP" />
+                    <input type="hidden" name="GiaSale" value="@GiaSale" />
+                </div>
+            </div>
+            <button class="primary-btn">Submit</button>
+
+        }
+    </div>
+</div>

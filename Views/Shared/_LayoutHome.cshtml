@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Electro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/slick-theme.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/nouislider.min.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="~/Content/style.css" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="~/Content/style.css" />*@
+
+</head>
+<body>
+
+    @Html.Action("SearchPartial", "Home", new { TongSoSanPham = ViewBag.GioHang })
+    @Html.Action("NavPartial", "Home")
+    @*@Html.Action("KhuyenMaiPartial", "Home")*@
+    @RenderBody()
+    @Html.Action("FooterPartial", "Home")
+
+
+
+    <!-- jQuery Plugins -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/slick.min.js"></script>
+    <script src="~/Scripts/nouislider.min.js"></script>
+    <script src="~/Scripts/jquery.zoom.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/khuyenmai_demnguoc.js"></script>
+
+
+    <script>
+        function checkDieuKhoan() {
+            var x = document.getElementById("myCheck").required;
+            document.getElementById("demo").innerHTML = x;
+        }
+    </script>
+</body>
+</html>

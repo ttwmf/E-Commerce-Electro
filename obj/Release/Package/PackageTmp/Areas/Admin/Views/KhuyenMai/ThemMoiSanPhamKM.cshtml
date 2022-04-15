@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "ThemMoiSanPhamKM";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 style="text-align:center">Thêm sản phẩm khuyến mãi</h2>
+
+@using (Html.BeginForm("ThemMoiSanPhamKM", "KhuyenMai", FormMethod.Post, new { @enctype = "multipart/form-data", url = ViewBag.Url }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-2">Mã khuyến mãi:</label>
+        <div class="col-md-10">
+            <input type="text" size="70" name="MaKM" value="@ViewBag.MaKM" readonly />
+        </div>
+    </div>
+    <div class="form-group">
+        <lable class="control-label col-md-2">Mã sản phẩm</lable>
+        <div class="col-md-10">
+            @Html.DropDownList("MaSP")
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Giảm giá (%):</label>
+        <div class="col-md-10">
+            <input type="number" size="70" name="GiamGia" min="1" max="99" value="1" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="padding-left:300px">
+            <input type="submit" value="Thêm" class="btn btn-warning" />
+        </div>
+    </div>
+</div>
+}
+<p>
+    <a href="@ViewBag.Url" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+</p>
+
+

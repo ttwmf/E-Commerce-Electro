@@ -1,0 +1,196 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Electro - HTML Ecommerce Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700"
+          rel="stylesheet" />
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="~/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="~/css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    @Html.Action("SearchPartial", "Home")
+    @Html.Action("NavPartial", "Home")
+
+    @{
+        String TinhTrang = "";
+        TinhTrang = (Model.SoLuongTon > 0 ? "Còn hàng" : "Hết hàng");
+
+    }
+    @{
+        double TrungBinhDanhGia = 0;
+        if (ViewBag.SoLuongDanhGia != 0)
+        {
+            TrungBinhDanhGia = Math.Round((double)(1.0 * ViewBag.TongDanhGia * 10 / ViewBag.SoLuongDanhGia));
+        }
+
+        TrungBinhDanhGia /= 10;
+    }
+    <br />
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-7">
+
+                <img src="~/img/@Model.HinhAnh" alt="" style="height:400px; margin-left:200px;" />
+            </div>
+            <!-- /Product main img -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.TenSP</h2>
+                    <div>
+                        <div class="product-rating">
+                            @{ int star = 0;}
+                            @for (; star < @Math.Floor((double)TrungBinhDanhGia); star++)
+                            {
+                                <i class="fa fa-star" style="color:orange"></i>
+
+                            }
+                            @if (star < @Math.Ceiling((double)TrungBinhDanhGia))
+                            {
+                                <i class="fa fa-star-half-full" style="color:orange"></i>
+                                star++;
+                            }
+                            @for (; star < 5; star++)
+                            {
+                                <span class="fa fa-star-o"></span>
+                            }
+
+                            <span style="font-weight:bold; color: orange">@TrungBinhDanhGia</span>
+                        </div>
+                        <a class="review-link" href="#" style="font-size:14px">
+                            @ViewBag.SoLuongDanhGia đánh giá |
+                            @Model.LuotXem lượt xem
+                        </a>
+                    </div>
+                    @if (ViewBag.GiaSale > 0)
+                    {
+                        <div>
+                            <h4 class="product-price">
+                                @Html.FormatValue(ViewBag.GiaSale, "{0:#,###}") VNĐ
+                            </h4>
+                            <del class="product-old-price">@Html.FormatValue(Model.DonGia, "{0:#,###}") VNĐ</del>
+                            <p style="color:red; font-weight:bold; font-size:20px">@TinhTrang</p>
+
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div>
+                            <h4 class="product-price">
+                                @Html.FormatValue(Model.DonGia, "{0:#,###}") VNĐ
+                            </h4>
+                            <p style="color:red; font-weight:bold; font-size:20px">@TinhTrang</p>
+
+                        </div>
+
+
+
+                    }
+
+
+                    <p>
+                        @Model.MoTa
+                    </p>
+                    @if (Model.SoLuongTon > 0)
+                    {
+                        <div class="add-to-cart">
+                            <button class="add-to-cart-btn" onclick="location.href = '@Url.Action("ThemGioHang", "GioHang", new { MaSP = Model.MaSP, url = Request.Url.ToString()})'">
+                                <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                            </button>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <!-- /Product details -->
+        <!-- Product tab -->
+        <div class="row">
+            <div class="col-md-12">
+                <div id="product-tab" , style="margin-top:20px">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li>
+                            <a data-toggle="tab" href="#tab1">Mô tả</a>
+                        </li>
+                        <li><a data-toggle="tab" href="#tab2">Cấu hình</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab3">Đánh giá(@ViewBag.SoLuongDanhGia)</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        @Model.MoTa
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+                        <!-- tab2  -->
+                        <div id="tab2" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        @Model.CauHinh
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab2  -->
+                        <!-- tab3  -->
+                        <div id="tab3" class="tab-pane fade in active">
+                            @Html.Action("Index", "DanhGia", new { MaSP = Model.MaSP, GiaSale = ViewBag.GiaSale, Page = ViewBag.Page })
+                        </div>
+                        <!-- /tab3  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    @Html.Action("FooterPartial", "Home")
+
+    <!-- jQuery Plugins -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+    <script src="~/js/nouislider.min.js"></script>
+    <script src="~/js/jquery.zoom.min.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

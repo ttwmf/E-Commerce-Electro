@@ -1,0 +1,25 @@
+﻿<nav id="navigation">
+    <div class="container">
+        <div id="responsive-nav">
+            <ul class="main-nav nav navbar-nav">
+                <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Laptops
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("Apple", "NhaSanXuat", new { MaNSX = 7})">Apple</a></li>
+                        <li><a href="#">Dell</a></li>
+                        <li><a href="@Url.Action("Apple", "NhaSanXuat", new { MaNSX = 1})">Asus</a></li>
+                        <li><a href="#">khác</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="@Url.Action("SanPhamKhuyenMai", "Home")">Khuyến mãi</a></li>
+                <li><a href="#">Hỏi đáp</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

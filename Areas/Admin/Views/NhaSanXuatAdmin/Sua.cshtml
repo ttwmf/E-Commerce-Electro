@@ -1,0 +1,46 @@
+﻿
+@{ ViewBag.Title = "Sua";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"; }
+
+<h2>Sửa nhà sản xuất</h2>
+<br />
+@using (Html.BeginForm("Sua", "NhaSanXuatAdmin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <lable class="control-label col-md-2">Mã nhà sản xuất</lable>
+            <div class="col-md-10">
+                <input type="text" size="70" name="MaNSX" value="@Model.MaNSX" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            <lable class="control-label col-md-2">Tên Nhà Sản Xuất</lable>
+            <div class="col-md-10">
+                @if (!string.IsNullOrEmpty(ViewBag.KiemTraTenNSX))
+                {
+                    <p style="color:red">@ViewBag.KiemTraTenNSX</p>
+                }
+                <input type="text" size="70" name="TenNSX" placeholder="Tên nhà sản xuất" value="@Model.TenNSX" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">Thông Tin Nhà Sản Xuất</lable>
+            <div class="col-md-10">
+                @if (!string.IsNullOrEmpty(ViewBag.KiemTraThongTin))
+                {
+                    <p style="color:red">@ViewBag.KiemTraThongTin</p>
+                }
+                <textarea name="ThongTin" style="width:70%" placeholder="Thông Tin Nhà Sản Xuất">@Model.ThongTin</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="padding-left:300px">
+                <input type="submit" value="Cập nhật" class="btn btn-warning" />
+            </div>
+        </div>
+    </div>}
+<p>
+    <a href="" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+</p>
+

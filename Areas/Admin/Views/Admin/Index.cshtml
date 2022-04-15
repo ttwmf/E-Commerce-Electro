@@ -1,0 +1,118 @@
+﻿@model PagedList.PagedList<Electro.Models.DonDatHang>
+@using PagedList.Mvc
+@using Electro.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@*Tao helper rieng*@
+@helper TrunCate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>....</text>
+    }
+}
+
+
+<div class="container-fluid">
+    <h2 style="text-align:center">Danh sách đơn hàng đang chờ xử lý</h2>
+
+    <table class="table-hover">
+        <tr style="background-color:darkgray">
+            <th style="text-align:center; width:5%">
+                Mã đơn hàng
+            </th>
+            <th style="text-align:center; width:10%">
+                Tên khách hàng
+            </th>
+
+            <th style="text-align:center; width:10%">
+                Điện thoại
+            </th>
+            <th style="text-align:center; width:12%">
+                Địa chỉ giao hàng
+            </th>
+            <th style="text-align:center; width:12%">
+                Email
+            </th>
+
+            <th style="text-align:center; width:12%">
+                Phương thức thanh toán
+            </th>
+            <th style="text-align:center; width:8%">
+                Tình trạng
+            </th>
+            <th style="text-align:center; width:5%">
+                Ngày lập đơn
+            </th>
+            <th style="text-align:center; width:10%">
+                Số tiền
+            </th>
+            <th style="text-align:center"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center; font-weight:bold">
+                    @item.MaDDH
+                </td>
+                <td style="text-align:center">
+                    @item.Hoten
+                </td>
+                <td style="text-align:center">
+                    @item.DienThoai
+                </td>
+                <td style="text-align:center">
+                    @item.DiaChiGiaoHang
+                </td>
+                <td style="text-align:center">
+                    @item.Email
+                </td>
+                <td style="text-align:center">
+                    @item.PhuongThucThanhToan
+                </td>
+
+                <td style="text-align:center">
+                    @item.TinhTrang
+
+                </td>
+
+                <td style="text-align:center">
+                    @Html.FormatValue(item.NgayLap, "{0:dd/MM/yyyy}")
+                </td>
+                <td style="text-align:center">
+                    @string.Format("{0:#,##0,0}", item.TongTien)
+                </td>
+                <td>
+                    <a href="@Url.Action("Sua", "Admin", new { MaDDH = item.MaDDH })" class="btn btn-warning" role="button">Xử lý</a>
+                    <a href="@Url.Action("ChiTietDonHang", "DonHang", new { MaDDH = item.MaDDH})" class="btn btn-primary" role="button">Chi tiết</a>
+
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+    </div>
+</div>
+<style>
+    .MenuTrang {
+        display: inline;
+        display: inline;
+        text-align: center;
+    }
+</style>
+
+
+

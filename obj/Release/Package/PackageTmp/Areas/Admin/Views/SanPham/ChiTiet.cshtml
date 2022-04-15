@@ -1,0 +1,90 @@
+﻿@model Electro.Models.SanPham
+@{
+    ViewBag.Title = "ChiTiet";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="container">
+    <h2 style="text-align:center">CHI TIẾT SẢN PHẨM</h2>
+    <hr />
+    <dl class="dl-horizontal center-block" style="text-align: left">
+        <dt>
+            Mã SP:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaSP)
+        </dd>
+        <dt>
+            Tên SP:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TenSP)
+        </dd>
+
+        <dt>
+            Cấu hình:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CauHinh)
+        </dd>
+
+        <dt>
+            Nhà cung cấp:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NhaCungCap.TenNCC)
+        </dd>
+        <dt>
+            Thương hiệu:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NhaSanXuat.TenNSX)
+        </dd>
+
+
+
+        <dt>
+            Giá bán:
+        </dt>
+        <dd>
+            @string.Format("{0:#,##0,0}", Model.DonGia) VNĐ
+        </dd>
+
+        <dt>
+            Số lượng còn lại:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoLuongTon)
+        </dd>
+        <dt>
+            Mô tả:
+        </dt>
+        <dd>
+            @Html.Raw(@Model.MoTa.ToString().Replace("\n", "</p><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"))
+        </dd>
+
+        <dt>
+            Hình SP:
+        </dt>
+        <dd>
+            <img src="~/img/@Model.HinhAnh" style="width:300px; height:375px; margin-bottom:20px;" />
+        </dd>
+
+        <dt>
+            Ngày cập nhât:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayCapNhat)
+        </dd>
+
+
+    </dl>
+</div>
+<p >
+    <a href="@ViewBag.Url" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+</p>
+
+

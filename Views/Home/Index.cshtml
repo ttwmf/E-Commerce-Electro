@@ -1,0 +1,29 @@
+﻿
+@model IEnumerable<Electro.Models.TakeEverything>
+@using Electro.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<style>
+    .fa-star {
+        color: orange;
+    }
+</style>
+@if(ViewBag.MaKM != 0){
+    @Html.Action("DemNguocPartial", "Home", new { MaKM = ViewBag.MaKM })
+}
+<div class="container">
+    @if (ViewBag.MaKM != 0 && false)
+    {
+        @Html.Action("SanPhamKhuyenMaiPartial", "Home", new { MaKM = ViewBag.MaKM });
+
+    }
+    else
+    {
+        @Html.Action("SanPhamDanhGiaCaoPartial", "Home");
+
+    }
+
+    @Html.Action("SanPhamMoiPartial", "Home");
+</div>

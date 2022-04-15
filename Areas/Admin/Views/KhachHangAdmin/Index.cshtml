@@ -1,0 +1,95 @@
+﻿@model PagedList.PagedList<Electro.Models.KhachHang>
+@using PagedList.Mvc
+@using Electro.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+@*Tao helper rieng*@
+@helper TrunCate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>....</text>
+    }
+}
+
+<div class="container-fluid">
+    <h2 style="text-align:center">Danh sách khách hàng</h2>
+
+    <table class="table-hover">
+        <tr style="background-color:darkgray">
+            <th style="text-align:center; width:8%">
+                Mã KH
+            </th>
+            <th style="text-align:center; width:20%">
+                Họ Tên
+            </th>
+            <th style="text-align:center; width:10%">
+                Điện thoại
+            </th>
+            <th style="text-align:center; width:20%">
+                Địa chỉ
+            </th>
+            <th style="text-align:center; width:15%">
+                Email
+            </th>
+
+            <th style="text-align:center; width:10%">
+                Tài khoản
+            </th>
+           
+            <th style="text-align:center; width: 17%"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center; font-weight:bold">
+                    @item.MaKH
+                </td>
+                <td style="text-align:center">
+                    @item.HoTen
+                </td>
+
+                <td style="text-align:center">
+                    @item.DienThoai
+                </td>
+                <td style="text-align:center">
+                    @item.DiaChi
+                </td>
+                <td style="text-align:center">
+                    @item.Email
+                </td>
+                <td style="text-align:center">
+                    @item.TaiKhoan
+                </td>
+                <td>
+                    <a href="@Url.Action("DanhSachHoaDon", new { MaKH = item.MaKH , url = Request.Url.ToString()})" class="btn btn-primary" role="button">Chi tiết</a>
+                    <a href="@Url.Action("Xoa", new { MaSP = item.MaKH })" class="btn btn-danger" role="button">Xóa</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+
+    </div>
+</div>
+<style>
+    .MenuTrang {
+        display: inline;
+        display: inline;
+        text-align: center;
+    }
+</style>
+

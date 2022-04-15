@@ -1,0 +1,46 @@
+﻿@using Electro.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<BinhLuan>
+<div class="col-md-6">
+    <div id="reviews" class="tab-content">
+        <ul class="reviews">
+            @foreach (var bl in Model)
+            {
+                <li>
+                    <div class="review-heading">
+                        <h5 class="name">@bl.NguoiBinhLuan</h5>
+                        <p class="date">@bl.NgayBinhLuan.Value.ToString("D")</p>
+                        @{ int i = 0;}
+
+                        <div class="review-rating">
+                            @for (; i < bl.DanhGia; i++)
+                            {
+                                <i class="fa fa-star"></i>
+                            }
+                            @for (; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o empty"></i>
+                            }
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>
+                            @bl.NoiDung
+                        </p>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        Trang @(Model.PageCount<Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("ChiTietSanPham", "Home", new { MaSP = ViewBag.MaSP,GiaSale = ViewBag.GiaSale, page = page }))
+        </div>
+        <style>
+            .MenuTrang {
+                display: inline;
+                text-align: center;
+            }
+        </style>
+    </div>
+</div>

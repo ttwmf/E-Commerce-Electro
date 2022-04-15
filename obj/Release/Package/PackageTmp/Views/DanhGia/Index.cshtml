@@ -1,0 +1,11 @@
+﻿<div class="row">
+    <!-- Rating -->
+    @Html.Action("RatingPartial", "DanhGia", new { MaSP = @ViewBag.MaSP })
+    <!-- /Rating -->
+    <!-- Reviews -->
+    @Html.Action("ReviewPartial", "DanhGia", new { MaSP = @ViewBag.MaSP,GiaSale = ViewBag.GiaSale, Page = ViewBag.Page })
+    <!-- /Reviews -->
+    <!-- Review Form -->
+    @Html.Action("ReviewFormPartial", "DanhGia", new { MaSP = @ViewBag.MaSP, GiaSale = ViewBag.GiaSale })
+    <!-- /Review Form -->
+</div>

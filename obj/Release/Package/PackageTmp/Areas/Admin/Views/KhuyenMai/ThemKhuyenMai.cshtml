@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "ThemKhuyenMai";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<br />
+<h2>Thêm chương trình khuyễn mãi</h2>
+<br />
+@using (Html.BeginForm("ThemKhuyenMai", "KhuyenMai", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <lable class="control-label col-md-2">Tên SP:</lable>
+            <div class="col-md-10">
+                <input type="text" size="70" name="TenCT" placeholder="Tên chương trình khuyễn mãi" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">Cấu hình:</lable>
+            <div class="col-md-10">
+                <textarea name="NoiDung" style="width:70%" placeholder="Nội dung chương trình"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <lable class="control-label col-md-2">Ngày bắt đầu</lable>
+            <div class="col-md-10">
+                <input type="date"  name="NgayBatDau" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable class="control-label col-md-2">Ngày kết thúc</lable>
+            <div class="col-md-10">
+                <input type="date"  name="NgayKetThuc" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="padding-left:300px">
+                <input type="submit" value="Lưu thông tin" class="btn btn-warning" />
+            </div>
+        </div>
+    </div>
+}
+<p>
+    <a href="" class="btn btn-primary" role="button" style="font-size:20px"><<</a>
+</p>
+
+
+

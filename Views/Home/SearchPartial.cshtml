@@ -1,0 +1,58 @@
+﻿
+@using Electro.Models;
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
+<div id="top-header" class="navbar-fixed-top">
+    <div class="container">
+        <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> 1900 8198</a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i> electro@gmail.com</a></li>
+        </ul>
+        <ul class="header-links pull-right">
+            @Html.Action("GioHangPartial", "GioHang");
+            @if (Session["TaiKhoan"] == null)
+            {
+                <li><a href="@Url.Action("DangKy", "KhachHang")"><i class="fa fa-user-o"></i><span>Đăng ký</span></a></li>
+                <li><a href="@Url.Action("DangNhap", "KhachHang", new { Status = @ViewBag.DangNhapFrom })"><i class="fa fa-user-o"></i> Đăng nhập</a></li>
+            }
+            else
+            {
+                <li><a href="@Url.Action("DangXuat", "KhachHang")"><i class="fa fa-sign-out"></i><span>Đăng xuất</span></a></li>
+                <li><a href="@Url.Action("CapNhatThongTinKhachHang", "KhachHang")"><i class="fa fa-user-o"></i>@kh.HoTen</a></li>
+            }
+
+        </ul>
+
+    </div>
+</div>
+
+<div id="header" style="padding-top:40px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="header-logo">
+                    <a href='@Url.Action("Index", "Home")' class="logo">
+                        <img src="~/img/logo.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="header-search">
+                    @using (Html.BeginForm("KetQuaTimKiem", "TimKiem", FormMethod.Get, new { role = "search" }))
+                    {
+                        <input class="input" name="TuKhoa" placeholder="Nội dung tìm kiếm">
+                        <button class="search-btn">Tìm kiếm</button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="header-logo">
+                    <a href='@Url.Action("Index", "Home")' class="logo">
+                        <img src="~/img/logo.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

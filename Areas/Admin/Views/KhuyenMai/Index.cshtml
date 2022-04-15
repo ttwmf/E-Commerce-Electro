@@ -1,0 +1,95 @@
+﻿@using PagedList.Mvc
+@model PagedList.PagedList<Electro.Models.KhuyenMai>
+@using Electro.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@*Tao helper rieng*@
+@helper TrunCate(string s, int length)
+{
+    if (s.Length < length)
+    {
+        @s
+    }
+    else
+    {
+        @s.Substring(0, length)<text>....</text>
+    }
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 style="text-align:center">Danh sách sản phẩm</h2>
+
+    <table class="table-hover">
+        <tr style="background-color:darkgray">
+            <th style="text-align:center; width:10%">
+                Mã CT
+            </th>
+            <th style="text-align:center; width:15%">
+                Tên CT
+            </th>
+            <th style="text-align:center; width:20%">
+                Nội dung
+            </th>
+            <th style="text-align:center; width:10%">
+                Ngày bắt đầu
+            </th>
+            <th style="text-align:center; width:10%">
+                Ngày kết thúc
+            </th>
+            <th style="text-align:right; width: 20%"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center; font-weight:bold">
+                    @item.MaKM
+                </td>
+                <td style="text-align:center">
+                    @item.TenChuongTrinh
+                </td>
+                <td style="text-align:center">
+                    @Html.Raw(TrunCate(item.NoiDung, 30).ToString())
+                </td>
+
+                <td style="text-align:center">
+                    @Html.FormatValue(item.NgayBatDau, "{0:dd/MM/yyyy}")
+                </td>
+                <td style="text-align:center">
+                    @Html.FormatValue(item.NgayKetThuc, "{0:dd/MM/yyyy}")
+                </td>
+
+                <td style="padding-left:100px">
+                    <a href="@Url.Action("Sua", new { MaKM = item.MaKM , url = Request.Url.ToString()})" class="btn btn-warning" role="button">Sửa</a>
+                    <a href="@Url.Action("ChiTietKhuyenMai", new { MaKM = item.MaKM , url = Request.Url.ToString()})" class="btn btn-primary" role="button">Chi tiết</a>
+                    <a href="@Url.Action("Xoa", new { MaKM = item.MaKM, url = Request.Url.ToString() })" class="btn btn-danger" role="button">Xóa</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    </div>
+    <div style="margin-left:90%">
+        <a href="@Url.Action("ThemKhuyenMai")" class="btn btn-info" role="button" style="font-weight:bold; color:red;">Thêm mới</a>
+    </div>
+</div>
+<style>
+    .MenuTrang {
+        display: inline;
+        display: inline;
+        text-align: center;
+    }
+</style>
+
+
